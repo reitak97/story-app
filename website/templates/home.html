@@ -1,0 +1,38 @@
+{% extends "base.html" %} 
+{% block title %}Home{% endblock %}
+
+{% block content %}
+<h1 align="center">Stories</h1>
+<ul class="list-group list-group-flush" id="stories">
+    {% for story in user.stories %}
+    <li class="list-group-item">
+        <h3>{{ story.title }}</h3>
+        <img src="{{ url_for('static', filename='uploads/' + story.image) }}" alt="story image" style="width: 100px; height: 100px;">
+        <p>{{ story.content }}</p>
+        <p>{{ story.date_created }}</p>
+
+        <button type="button" class="close" onclick="deleteStory({{ story.id }})">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </li>
+    {% endfor %}
+</ul>
+    <form method ="POST" enctype="multipart/form-data">
+
+        <div class="form-group">
+            <label for="title">Title</label>
+            <input type="text" class="form-control" id="title" name="title" placeholder="Enter title">
+        </div>
+        <div class="form-group">
+            <input type="file" id="image" name="image">
+        </div>
+        <div class="form-group">
+            <label for="content">Content</label>
+            <textarea class="form-control" id="content" name="content" placeholder="Enter content"></textarea>
+        </br>
+
+        <div align="center">
+            <button type="submit" class="btn btn-primary">Add Story</button>
+        </div>
+    </form>
+{% endblock %}
